@@ -9,7 +9,7 @@ const server = http.createServer((req, res) => {
   }
 
   res.writeHead(200);
-  res.end(`Hello from Coolify\nTime: ${new Date()}`);
+  res.end(`Hello from Coolify final version\nTime: ${new Date()}`);
 });
 
 server.listen(PORT, () => {
