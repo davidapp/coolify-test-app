@@ -1,0 +1,22 @@
+name: Deploy to Coolify
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger Coolify Deployment
+        run: |
+          response=$(curl -s -o /dev/null -w "%{http_code}" -X GET \
+            "http://72.62.179.94:8000/api/v1/deploy?uuid=${{ secrets.COOLIFY_APP_UUID }}&force=false" \
+            -H "Authorization: Bearer ${{ secrets.COOLIFY_TOKEN }}")
+          echo "Response status: $response"
+          if [ "$response" -ne 200 ]; then
+            echo "Deployment trigger failed with status $response"
+            exit 1
+          fi
+          echo "Deployment triggered successfully"
